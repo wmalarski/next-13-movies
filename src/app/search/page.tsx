@@ -78,7 +78,3 @@ export default async function SearchPage({
     </div>
   );
 }
-
-export const head: DocumentHead = {
-  title: "Search - Qwik City Movies",
-};

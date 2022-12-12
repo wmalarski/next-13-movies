@@ -53,13 +53,3 @@ export default async function HomePage() {
     </div>
   );
 }
-
-export const head: DocumentHead = {
-  meta: [
-    {
-      content: "Qwik City Movies - real app example using Qwik-City",
-      name: "description",
-    },
-  ],
-  title: "Qwik City Movies",
-};

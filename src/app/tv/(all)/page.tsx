@@ -46,7 +46,3 @@ export default async function AllTvPage() {
     </div>
   );
 }
-
-export const head: DocumentHead = {
-  title: "TV - Qwik City Movies",
-};

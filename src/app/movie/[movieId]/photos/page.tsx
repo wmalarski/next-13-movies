@@ -41,7 +41,3 @@ export default function MoviePhotosPage() {
     </section>
   );
 }
-
-export const head: DocumentHead = {
-  title: "Qwik City Movies",
-};

@@ -37,7 +37,3 @@ export default async function PersonPage({
     </div>
   );
 }
-
-export const head: DocumentHead = {
-  title: "Qwik City Movies",
-};

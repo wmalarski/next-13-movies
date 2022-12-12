@@ -9,7 +9,3 @@ export default function MoviePage() {
     </div>
   );
 }
-
-export const head: DocumentHead = {
-  title: "Qwik City Movies",
-};

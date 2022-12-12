@@ -65,10 +65,3 @@ export default async function TvGenrePage({
     </div>
   );
 }
-
-export const head: DocumentHead = (event) => {
-  const name = event.data?.genre?.name;
-  return {
-    title: `${name} Tv Shows - Qwik City Movies`,
-  };
-};

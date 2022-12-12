@@ -42,7 +42,3 @@ export default async function MoviesPage() {
     </div>
   );
 }
-
-export const head: DocumentHead = {
-  title: "Qwik City Movies",
-};
