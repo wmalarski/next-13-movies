@@ -1,10 +1,10 @@
-import { Resource, Slot, useContextProvider } from "@builder.io/qwik";
-import { useEndpoint, useLocation } from "@builder.io/qwik-city";
+import { Slot, useContextProvider } from "@builder.io/qwik";
+import { useLocation } from "@builder.io/qwik-city";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
 import { getMovie } from "@services/tmdb";
-import type { inferPromise } from "@services/types";
 import { paths } from "@utils/paths";
 import clsx from "clsx";
+import { notFound } from "next/navigation";
 import { z } from "zod";
 import { MovieResourceContext } from "./context";
 
@@ -14,17 +14,16 @@ export default async function MovieLayout() {
     .safeParse({ movieId: +event.params.movieId });
 
   if (!parseResult.success) {
-    throw event.response.redirect(paths.notFound);
+    notFound();
   }
 
   try {
     const movie = await getMovie({ id: parseResult.data.movieId });
   } catch {
-    throw event.response.redirect(paths.notFound);
+    notFound();
   }
   const location = useLocation();
 
-  const resource = useEndpoint<inferPromise<typeof onGet>>();
   useContextProvider(MovieResourceContext, resource);
 
   const overviewHref = paths.media("movie", +location.params.movieId);
@@ -33,12 +32,7 @@ export default async function MovieLayout() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Resource
-        value={resource}
-        onPending={() => <div className="h-80" />}
-        onRejected={() => <div>Rejected</div>}
-        onResolved={(data) => <MovieHero media={data} />}
-      />
+      <MovieHero media={movie} />
       <div className="flex flex-row items-center justify-center gap-4">
         <a
           href={overviewHref}

@@ -1,9 +1,7 @@
-import { Resource } from "@builder.io/qwik";
-import { useEndpoint, type DocumentHead } from "@builder.io/qwik-city";
+import { type DocumentHead } from "@builder.io/qwik-city";
 import { MediaCarousel } from "@modules/MediaCarousel/MediaCarousel";
 import { TvHero } from "@modules/TvHero/TvHero";
 import { getRandomMedia, getTvShow, getTvShows } from "@services/tmdb";
-import type { inferPromise } from "@services/types";
 import { getListItem } from "@utils/format";
 import { paths } from "@utils/paths";
 
@@ -20,41 +18,33 @@ export default async function AllTvPage() {
   });
 
   const featured = await getTvShow({ id: random.id });
-  const resource = useEndpoint<inferPromise<typeof onGet>>();
 
   return (
-    <Resource
-      value={resource}
-      onPending={() => <div className="h-screen" />}
-      onRejected={() => <div>Rejected</div>}
-      onResolved={(data) => (
-        <div className="flex flex-col gap-4">
-          <a href={paths.media("tv", data.featured?.id)}>
-            <TvHero media={data.featured} />
-          </a>
-          <MediaCarousel
-            collection={data.popular?.results || []}
-            title={getListItem({ query: "popular", type: "tv" })}
-            viewAllHref={paths.tvCategory("popular")}
-          />
-          <MediaCarousel
-            collection={data.topRated?.results || []}
-            title={getListItem({ query: "top_rated", type: "tv" })}
-            viewAllHref={paths.tvCategory("top_rated")}
-          />
-          <MediaCarousel
-            collection={data.onTheAir?.results || []}
-            title={getListItem({ query: "on_the_air", type: "tv" })}
-            viewAllHref={paths.tvCategory("on_the_air")}
-          />
-          <MediaCarousel
-            collection={data.airingToday?.results || []}
-            title={getListItem({ query: "airing_today", type: "tv" })}
-            viewAllHref={paths.tvCategory("airing_today")}
-          />
-        </div>
-      )}
-    />
+    <div className="flex flex-col gap-4">
+      <a href={paths.media("tv", data.featured?.id)}>
+        <TvHero media={data.featured} />
+      </a>
+      <MediaCarousel
+        collection={data.popular?.results || []}
+        title={getListItem({ query: "popular", type: "tv" })}
+        viewAllHref={paths.tvCategory("popular")}
+      />
+      <MediaCarousel
+        collection={data.topRated?.results || []}
+        title={getListItem({ query: "top_rated", type: "tv" })}
+        viewAllHref={paths.tvCategory("top_rated")}
+      />
+      <MediaCarousel
+        collection={data.onTheAir?.results || []}
+        title={getListItem({ query: "on_the_air", type: "tv" })}
+        viewAllHref={paths.tvCategory("on_the_air")}
+      />
+      <MediaCarousel
+        collection={data.airingToday?.results || []}
+        title={getListItem({ query: "airing_today", type: "tv" })}
+        viewAllHref={paths.tvCategory("airing_today")}
+      />
+    </div>
   );
 }
 

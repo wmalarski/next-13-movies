@@ -1,4 +1,3 @@
-import { Resource } from "@builder.io/qwik";
 import { type DocumentHead } from "@builder.io/qwik-city";
 import { MediaCarousel } from "@modules/MediaCarousel/MediaCarousel";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
@@ -31,35 +30,28 @@ export default async function HomePage() {
     random.media_type === "movie" ? await getMovie({ id: random.id }) : null;
 
   return (
-    <Resource
-      value={resource}
-      onPending={() => <div className="h-screen" />}
-      onRejected={() => <div>Rejected</div>}
-      onResolved={(data) => (
-        <div className="flex flex-col gap-4">
-          {data.featuredTv ? (
-            <a href={paths.media("tv", data.featuredTv.id)}>
-              <TvHero media={data.featuredTv} />
-            </a>
-          ) : null}
-          {data.featuredMovie ? (
-            <a href={paths.media("movie", data.featuredMovie.id)}>
-              <MovieHero media={data.featuredMovie} />
-            </a>
-          ) : null}
-          <MediaCarousel
-            collection={data.movies?.results || []}
-            title={getListItem({ query: "trending", type: "movie" })}
-            viewAllHref={paths.movieCategory("trending")}
-          />
-          <MediaCarousel
-            collection={data.tv?.results || []}
-            title={getListItem({ query: "trending", type: "tv" })}
-            viewAllHref={paths.tvCategory("trending")}
-          />
-        </div>
-      )}
-    />
+    <div className="flex flex-col gap-4">
+      {featuredTv ? (
+        <a href={paths.media("tv", featuredTv.id)}>
+          <TvHero media={featuredTv} />
+        </a>
+      ) : null}
+      {featuredMovie ? (
+        <a href={paths.media("movie", featuredMovie.id)}>
+          <MovieHero media={featuredMovie} />
+        </a>
+      ) : null}
+      <MediaCarousel
+        collection={movies?.results || []}
+        title={getListItem({ query: "trending", type: "movie" })}
+        viewAllHref={paths.movieCategory("trending")}
+      />
+      <MediaCarousel
+        collection={tv?.results || []}
+        title={getListItem({ query: "trending", type: "tv" })}
+        viewAllHref={paths.tvCategory("trending")}
+      />
+    </div>
   );
 }
 

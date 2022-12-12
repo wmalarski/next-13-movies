@@ -1,10 +1,8 @@
-import { Resource } from "@builder.io/qwik";
-import { DocumentHead, useEndpoint } from "@builder.io/qwik-city";
+import { DocumentHead } from "@builder.io/qwik-city";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
 import { PersonHero } from "@modules/PersonHero/PersonHero";
 import { getPerson } from "@services/tmdb";
-import type { inferPromise } from "@services/types";
-import { paths } from "@utils/paths";
+import { notFound } from "next/navigation";
 import { z } from "zod";
 
 export default async function PersonPage() {
@@ -13,36 +11,27 @@ export default async function PersonPage() {
     .safeParse({ personId: +event.params.personId });
 
   if (!parseResult.success) {
-    throw event.response.redirect(paths.notFound);
+    notFound();
   }
 
   try {
     const movie = await getPerson({ id: parseResult.data.personId });
-    return movie;
   } catch {
-    throw event.response.redirect(paths.notFound);
+    notFound();
   }
-  const resource = useEndpoint<inferPromise<typeof onGet>>();
 
   return (
-    <Resource
-      value={resource}
-      onPending={() => <div className="h-screen" />}
-      onRejected={() => <div>Rejected</div>}
-      onResolved={(data) => (
-        <div style="flex flex-col">
-          <PersonHero person={data} />
-          <MediaGrid
-            collection={[
-              ...(data.combined_credits?.cast || []),
-              ...(data.combined_credits?.crew || []),
-            ]}
-            currentPage={1}
-            pageCount={1}
-          />
-        </div>
-      )}
-    />
+    <div className="flex flex-col">
+      <PersonHero person={data} />
+      <MediaGrid
+        collection={[
+          ...(data.combined_credits?.cast || []),
+          ...(data.combined_credits?.crew || []),
+        ]}
+        currentPage={1}
+        pageCount={1}
+      />
+    </div>
   );
 }
 

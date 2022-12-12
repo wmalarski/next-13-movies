@@ -1,10 +1,10 @@
-import { $, Resource, useContext, useStore } from "@builder.io/qwik";
-import { DocumentHead, useEndpoint, useLocation } from "@builder.io/qwik-city";
+import { $, useContext, useStore } from "@builder.io/qwik";
+import { DocumentHead, useLocation } from "@builder.io/qwik-city";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
 import { getMovies, getTrendingMovie } from "@services/tmdb";
 import type { inferPromise, ProductionMedia } from "@services/types";
 import { getListItem } from "@utils/format";
-import { paths } from "@utils/paths";
+import { notFound } from "next/navigation";
 import { z } from "zod";
 import { ContainerContext } from "~/routes/context";
 
@@ -14,7 +14,7 @@ export default async function MovieCategory() {
     .safeParse({ ...event.params });
 
   if (!parseResult.success) {
-    throw event.response.redirect(paths.notFound);
+    notFound();
   }
 
   const name = parseResult.data.name;
@@ -25,7 +25,7 @@ export default async function MovieCategory() {
         ? await getTrendingMovie({ page: 1 })
         : await getMovies({ page: 1, query: name });
   } catch {
-    throw event.response.redirect(paths.notFound);
+    notFound();
   }
   const location = useLocation();
 
@@ -40,8 +40,6 @@ export default async function MovieCategory() {
     }
   );
 
-  const resource = useEndpoint<inferPromise<typeof onGet>>();
-
   const store = useStore({
     currentPage: 1,
     results: [] as ProductionMedia[],
@@ -53,28 +51,17 @@ export default async function MovieCategory() {
         {getListItem({ query: location.params.name, type: "movie" })}
       </h1>
       <div>
-        <Resource
-          value={resource}
-          onPending={() => <div className="h-screen" />}
-          onRejected={(e) => (
-            <div>
-              Rejected <pre>{JSON.stringify(e, null, 2)}</pre>
-            </div>
-          )}
-          onResolved={(data) => (
-            <MediaGrid
-              collection={[...(data.results || []), ...store.results]}
-              currentPage={store.currentPage}
-              pageCount={data.total_pages || 1}
-              parentContainer={container.value}
-              onMore$={async () => {
-                const newResult = await fetcher$(store.currentPage + 1);
-                const newMedia = newResult.results || [];
-                store.currentPage = newResult.page || store.currentPage;
-                store.results = [...store.results, ...newMedia];
-              }}
-            />
-          )}
+        <MediaGrid
+          collection={[...(data.results || []), ...store.results]}
+          currentPage={store.currentPage}
+          pageCount={data.total_pages || 1}
+          parentContainer={container.value}
+          onMore$={async () => {
+            const newResult = await fetcher$(store.currentPage + 1);
+            const newMedia = newResult.results || [];
+            store.currentPage = newResult.page || store.currentPage;
+            store.results = [...store.results, ...newMedia];
+          }}
         />
       </div>
     </div>

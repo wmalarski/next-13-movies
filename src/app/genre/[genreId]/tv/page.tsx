@@ -1,14 +1,9 @@
-import {
-  $,
-  Resource,
-  useContext,
-  useResource$,
-  useStore,
-} from "@builder.io/qwik";
+import { $, useContext, useStore } from "@builder.io/qwik";
 import { DocumentHead, useLocation } from "@builder.io/qwik-city";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
 import { getGenreList, getMediaByGenre } from "@services/tmdb";
 import type { inferPromise, ProductionMedia } from "@services/types";
+import { notFound } from "next/navigation";
 import { z } from "zod";
 import { ContainerContext } from "~/routes/context";
 
@@ -22,7 +17,7 @@ export default async function TvGenrePage() {
     .safeParse({ genreId: +event.params.genreId, page: +rawPage });
 
   if (!parseResult.success) {
-    throw event.response.redirect(paths.notFound);
+    notFound();
   }
 
   const [tvShows, genres] = await Promise.all([
@@ -49,36 +44,27 @@ export default async function TvGenrePage() {
     }
   );
 
-  const resource = useResource$(() => fetcher$(1));
-
   const store = useStore({
     currentPage: 1,
     results: [] as ProductionMedia[],
   });
 
   return (
-    <Resource
-      value={resource}
-      onPending={() => <div className="h-screen" />}
-      onRejected={() => <div>Rejected</div>}
-      onResolved={(data) => (
-        <div style="flex flex-col gap-4">
-          <h1 className="px-8 pt-4 text-4xl">{`Tv Show Genre: ${data.genre?.name}`}</h1>
-          <MediaGrid
-            collection={[...(data.tvShows.results || []), ...store.results]}
-            currentPage={store.currentPage}
-            pageCount={data.tvShows?.total_pages || 1}
-            parentContainer={container.value}
-            onMore$={async () => {
-              const newResult = await fetcher$(store.currentPage + 1);
-              const newMedia = newResult.tvShows.results || [];
-              store.currentPage = newResult.tvShows.page || store.currentPage;
-              store.results = [...store.results, ...newMedia];
-            }}
-          />
-        </div>
-      )}
-    />
+    <div className="flex flex-col gap-4">
+      <h1 className="px-8 pt-4 text-4xl">{`Tv Show Genre: ${genre?.name}`}</h1>
+      <MediaGrid
+        collection={[...(tvShows.results || []), ...store.results]}
+        currentPage={store.currentPage}
+        pageCount={tvShows?.total_pages || 1}
+        parentContainer={container.value}
+        onMore$={async () => {
+          const newResult = await fetcher$(store.currentPage + 1);
+          const newMedia = newResult.tvShows.results || [];
+          store.currentPage = newResult.tvShows.page || store.currentPage;
+          store.results = [...store.results, ...newMedia];
+        }}
+      />
+    </div>
   );
 }
 
