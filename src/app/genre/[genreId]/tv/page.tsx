@@ -11,7 +11,7 @@ import type { inferPromise, ProductionMedia } from "@services/types";
 import { ContainerContext } from "~/routes/context";
 import type { onGet } from "./api";
 
-export default () => {
+export default function TvGenrePage() {
   const location = useLocation();
 
   const container = useContext(ContainerContext);
@@ -56,7 +56,7 @@ export default () => {
       )}
     />
   );
-};
+}
 
 export const head: DocumentHead<inferPromise<typeof onGet>> = (event) => {
   const name = event.data?.genre?.name;

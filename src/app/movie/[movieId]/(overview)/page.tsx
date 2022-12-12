@@ -4,7 +4,7 @@ import { MovieInfoCard } from "@modules/MovieInfoCard/MovieInfoCard";
 import { PersonCarousel } from "@modules/PersonCarousel/PersonCarousel";
 import { MovieResourceContext } from "../context";
 
-export default () => {
+export default function MoviePage() {
   const resource = useContext(MovieResourceContext);
 
   return (
@@ -13,14 +13,14 @@ export default () => {
       onPending={() => <div className="h-screen" />}
       onRejected={() => <div>Rejected</div>}
       onResolved={(data) => (
-        <flex className="flex flex-col">
+        <div className="flex flex-col">
           <MovieInfoCard media={data} />
           <PersonCarousel collection={data.credits?.cast || []} title="Cast" />
-        </flex>
+        </div>
       )}
     />
   );
-};
+}
 
 export const head: DocumentHead = {
   title: "Qwik City Movies",

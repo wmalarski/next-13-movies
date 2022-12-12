@@ -26,7 +26,7 @@ export const onGet = async () => {
   return { featured, nowPlaying, popular, topRated };
 };
 
-export default () => {
+export default function MoviesPage() {
   const resource = useEndpoint<inferPromise<typeof onGet>>();
 
   return (
@@ -60,7 +60,7 @@ export default () => {
       )}
     />
   );
-};
+}
 
 export const head: DocumentHead = {
   title: "Qwik City Movies",

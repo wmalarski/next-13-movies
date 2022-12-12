@@ -3,7 +3,7 @@ import { DocumentHead } from "@builder.io/qwik-city";
 import { getImage, getImageSet } from "@services/images";
 import { MovieResourceContext } from "../context";
 
-export default () => {
+export default function MoviePhotosPage() {
   const resource = useContext(MovieResourceContext);
 
   return (
@@ -52,7 +52,7 @@ export default () => {
       )}
     />
   );
-};
+}
 
 export const head: DocumentHead = {
   title: "Qwik City Movies",

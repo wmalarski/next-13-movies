@@ -26,7 +26,7 @@ export const onGet = async (event: RequestEvent) => {
   }
 };
 
-export default () => {
+export default function TvPage() {
   const resource = useEndpoint<inferPromise<typeof onGet>>();
 
   return (
@@ -43,7 +43,7 @@ export default () => {
       )}
     />
   );
-};
+}
 
 export const head: DocumentHead = {
   title: "Qwik City Movies",

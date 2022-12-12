@@ -27,7 +27,7 @@ export const onGet = async () => {
   return { airingToday, featured, onTheAir, popular, topRated };
 };
 
-export default () => {
+export default function AllTvPage() {
   const resource = useEndpoint<inferPromise<typeof onGet>>();
 
   return (
@@ -64,7 +64,7 @@ export default () => {
       )}
     />
   );
-};
+}
 
 export const head: DocumentHead = {
   title: "TV - Qwik City Movies",

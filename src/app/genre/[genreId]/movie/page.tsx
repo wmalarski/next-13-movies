@@ -11,7 +11,7 @@ import type { inferPromise, ProductionMedia } from "@services/types";
 import { ContainerContext } from "~/routes/context";
 import type { onGet } from "./api";
 
-export default function MovieGenre() {
+export default function MovieGenrePage() {
   const location = useLocation();
 
   const container = useContext(ContainerContext);

@@ -35,7 +35,7 @@ export const onGet = async (event: RequestEvent) => {
   }
 };
 
-export default () => {
+export default function MovieCategory() {
   const location = useLocation();
 
   const container = useContext(ContainerContext);
@@ -88,7 +88,7 @@ export default () => {
       </div>
     </div>
   );
-};
+}
 
 export const head: DocumentHead = {
   title: "Qwik City Movies",

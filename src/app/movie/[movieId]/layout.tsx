@@ -26,7 +26,7 @@ export const onGet = async (event: RequestEvent) => {
   }
 };
 
-export default () => {
+export default function MovieLayout() {
   const location = useLocation();
 
   const resource = useEndpoint<inferPromise<typeof onGet>>();
@@ -85,4 +85,4 @@ export default () => {
       <Slot />
     </div>
   );
-};
+}

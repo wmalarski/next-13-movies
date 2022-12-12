@@ -22,7 +22,7 @@ export const onGet = async (event: RequestEvent) => {
   return { query, result };
 };
 
-export default () => {
+export default function SearchPage() {
   const location = useLocation();
 
   const container = useContext(ContainerContext);
@@ -102,7 +102,7 @@ export default () => {
       />
     </div>
   );
-};
+}
 
 export const head: DocumentHead = {
   title: "Search - Qwik City Movies",
