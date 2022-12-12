@@ -1,4 +1,4 @@
-import type { MediaType } from "~/services/types";
+import type { MediaType } from "@services/types";
 import { categories } from "./constants/categories";
 import { languages } from "./constants/languages";
 

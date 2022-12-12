@@ -1,4 +1,4 @@
-import type { MediaType } from "~/services/types";
+import type { MediaType } from "@services/types";
 
 export const paths = {
   genre: (mediaType: MediaType, id: number) => `/genre/${id}/${mediaType}`,
