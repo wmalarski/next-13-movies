@@ -1,18 +1,14 @@
 import { $, Resource, useContext, useStore } from "@builder.io/qwik";
-import {
-  DocumentHead,
-  RequestEvent,
-  useEndpoint,
-  useLocation,
-} from "@builder.io/qwik-city";
+import { DocumentHead, useEndpoint, useLocation } from "@builder.io/qwik-city";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
+import { getMovies, getTrendingMovie } from "@services/tmdb";
 import type { inferPromise, ProductionMedia } from "@services/types";
 import { getListItem } from "@utils/format";
 import { paths } from "@utils/paths";
 import { z } from "zod";
 import { ContainerContext } from "~/routes/context";
 
-export const onGet = async (event: RequestEvent) => {
+export default async function MovieCategory() {
   const parseResult = z
     .object({ name: z.string().min(1) })
     .safeParse({ ...event.params });
@@ -21,7 +17,6 @@ export const onGet = async (event: RequestEvent) => {
     throw event.response.redirect(paths.notFound);
   }
 
-  const { getMovies, getTrendingMovie } = await import("@services/tmdb");
   const name = parseResult.data.name;
 
   try {
@@ -29,13 +24,9 @@ export const onGet = async (event: RequestEvent) => {
       name === "trending"
         ? await getTrendingMovie({ page: 1 })
         : await getMovies({ page: 1, query: name });
-    return movies;
   } catch {
     throw event.response.redirect(paths.notFound);
   }
-};
-
-export default function MovieCategory() {
   const location = useLocation();
 
   const container = useContext(ContainerContext);

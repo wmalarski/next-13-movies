@@ -7,11 +7,35 @@ import {
 } from "@builder.io/qwik";
 import { DocumentHead, useLocation } from "@builder.io/qwik-city";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
+import { getGenreList, getMediaByGenre } from "@services/tmdb";
 import type { inferPromise, ProductionMedia } from "@services/types";
+import { z } from "zod";
 import { ContainerContext } from "~/routes/context";
-import type { onGet } from "./api";
 
-export default function MovieGenrePage() {
+export default async function MovieGenrePage() {
+  const rawPage = event.url.searchParams.get("page") || "1";
+  const parseResult = z
+    .object({
+      genreId: z.number().min(0).step(1),
+      page: z.number().min(1).step(1),
+    })
+    .safeParse({ genreId: +event.params.genreId, page: +rawPage });
+
+  if (!parseResult.success) {
+    throw event.response.redirect(paths.notFound);
+  }
+
+  const [movies, genres] = await Promise.all([
+    getMediaByGenre({
+      genre: parseResult.data.genreId,
+      media: "movie",
+      page: parseResult.data.page,
+    }),
+    getGenreList({ media: "movie" }),
+  ]);
+
+  const genre = genres.find((genre) => genre.id === parseResult.data.genreId);
+
   const location = useLocation();
 
   const container = useContext(ContainerContext);

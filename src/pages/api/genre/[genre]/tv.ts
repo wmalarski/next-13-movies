@@ -1,4 +1,5 @@
 import { RequestEvent } from "@builder.io/qwik-city";
+import { getGenreList, getMediaByGenre } from "@services/tmdb";
 import { paths } from "@utils/paths";
 import { z } from "zod";
 
@@ -14,8 +15,6 @@ export const onGet = async (event: RequestEvent) => {
   if (!parseResult.success) {
     throw event.response.redirect(paths.notFound);
   }
-
-  const { getMediaByGenre, getGenreList } = await import("@services/tmdb");
 
   const [tvShows, genres] = await Promise.all([
     getMediaByGenre({

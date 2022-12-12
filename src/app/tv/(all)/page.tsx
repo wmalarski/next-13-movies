@@ -2,15 +2,12 @@ import { Resource } from "@builder.io/qwik";
 import { useEndpoint, type DocumentHead } from "@builder.io/qwik-city";
 import { MediaCarousel } from "@modules/MediaCarousel/MediaCarousel";
 import { TvHero } from "@modules/TvHero/TvHero";
+import { getRandomMedia, getTvShow, getTvShows } from "@services/tmdb";
 import type { inferPromise } from "@services/types";
 import { getListItem } from "@utils/format";
 import { paths } from "@utils/paths";
 
-export const onGet = async () => {
-  const { getTvShows, getTvShow, getRandomMedia } = await import(
-    "@services/tmdb"
-  );
-
+export default async function AllTvPage() {
   const [popular, topRated, onTheAir, airingToday] = await Promise.all([
     getTvShows({ page: 1, query: "popular" }),
     getTvShows({ page: 1, query: "top_rated" }),
@@ -23,11 +20,6 @@ export const onGet = async () => {
   });
 
   const featured = await getTvShow({ id: random.id });
-
-  return { airingToday, featured, onTheAir, popular, topRated };
-};
-
-export default function AllTvPage() {
   const resource = useEndpoint<inferPromise<typeof onGet>>();
 
   return (

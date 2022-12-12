@@ -1,4 +1,5 @@
 import { RequestEvent } from "@builder.io/qwik-city";
+import { search } from "@services/tmdb";
 
 export const onGet = async (event: RequestEvent) => {
   const query = event.url.searchParams.get("query");
@@ -8,7 +9,6 @@ export const onGet = async (event: RequestEvent) => {
     return null;
   }
 
-  const { search } = await import("@services/tmdb");
   const result = await search({ page: +page, query });
 
   return { query, result };

@@ -2,15 +2,12 @@ import { Resource } from "@builder.io/qwik";
 import { useEndpoint, type DocumentHead } from "@builder.io/qwik-city";
 import { MediaCarousel } from "@modules/MediaCarousel/MediaCarousel";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
+import { getMovie, getMovies, getRandomMedia } from "@services/tmdb";
 import type { inferPromise } from "@services/types";
 import { getListItem } from "@utils/format";
 import { paths } from "@utils/paths";
 
-export const onGet = async () => {
-  const { getMovies, getRandomMedia, getMovie } = await import(
-    "@services/tmdb"
-  );
-
+export default async function MoviesPage() {
   const [popular, topRated, nowPlaying] = await Promise.all([
     getMovies({ page: 1, query: "popular" }),
     getMovies({ page: 1, query: "top_rated" }),
@@ -23,10 +20,6 @@ export const onGet = async () => {
 
   const featured = await getMovie({ id: random.id });
 
-  return { featured, nowPlaying, popular, topRated };
-};
-
-export default function MoviesPage() {
   const resource = useEndpoint<inferPromise<typeof onGet>>();
 
   return (

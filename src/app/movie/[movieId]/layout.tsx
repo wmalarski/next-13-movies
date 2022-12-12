@@ -1,13 +1,14 @@
 import { Resource, Slot, useContextProvider } from "@builder.io/qwik";
-import { RequestEvent, useEndpoint, useLocation } from "@builder.io/qwik-city";
+import { useEndpoint, useLocation } from "@builder.io/qwik-city";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
+import { getMovie } from "@services/tmdb";
 import type { inferPromise } from "@services/types";
 import { paths } from "@utils/paths";
 import clsx from "clsx";
 import { z } from "zod";
 import { MovieResourceContext } from "./context";
 
-export const onGet = async (event: RequestEvent) => {
+export default async function MovieLayout() {
   const parseResult = z
     .object({ movieId: z.number().min(0).step(1) })
     .safeParse({ movieId: +event.params.movieId });
@@ -16,17 +17,11 @@ export const onGet = async (event: RequestEvent) => {
     throw event.response.redirect(paths.notFound);
   }
 
-  const { getMovie } = await import("@services/tmdb");
-
   try {
     const movie = await getMovie({ id: parseResult.data.movieId });
-    return movie;
   } catch {
     throw event.response.redirect(paths.notFound);
   }
-};
-
-export default function MovieLayout() {
   const location = useLocation();
 
   const resource = useEndpoint<inferPromise<typeof onGet>>();

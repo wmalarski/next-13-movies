@@ -1,12 +1,13 @@
 import { Resource } from "@builder.io/qwik";
-import { DocumentHead, RequestEvent, useEndpoint } from "@builder.io/qwik-city";
+import { DocumentHead, useEndpoint } from "@builder.io/qwik-city";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
 import { PersonHero } from "@modules/PersonHero/PersonHero";
+import { getPerson } from "@services/tmdb";
 import type { inferPromise } from "@services/types";
 import { paths } from "@utils/paths";
 import { z } from "zod";
 
-export const onGet = async (event: RequestEvent) => {
+export default async function PersonPage() {
   const parseResult = z
     .object({ personId: z.number().min(0).step(1) })
     .safeParse({ personId: +event.params.personId });
@@ -15,17 +16,12 @@ export const onGet = async (event: RequestEvent) => {
     throw event.response.redirect(paths.notFound);
   }
 
-  const { getPerson } = await import("@services/tmdb");
-
   try {
     const movie = await getPerson({ id: parseResult.data.personId });
     return movie;
   } catch {
     throw event.response.redirect(paths.notFound);
   }
-};
-
-export default function PersonPage() {
   const resource = useEndpoint<inferPromise<typeof onGet>>();
 
   return (

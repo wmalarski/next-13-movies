@@ -1,28 +1,23 @@
 import { $, Resource, useContext, useStore } from "@builder.io/qwik";
 import {
-  RequestEvent,
   useEndpoint,
   useLocation,
   type DocumentHead,
 } from "@builder.io/qwik-city";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
+import { search } from "@services/tmdb";
 import type { inferPromise, ProductionMedia } from "@services/types";
 import { ContainerContext } from "../context";
 
-export const onGet = async (event: RequestEvent) => {
+export default async function SearchPage() {
   const query = event.url.searchParams.get("query");
 
   if (!query) {
     return null;
   }
 
-  const { search } = await import("@services/tmdb");
   const result = await search({ page: 1, query });
 
-  return { query, result };
-};
-
-export default function SearchPage() {
   const location = useLocation();
 
   const container = useContext(ContainerContext);

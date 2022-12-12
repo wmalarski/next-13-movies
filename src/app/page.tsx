@@ -1,21 +1,20 @@
 import { Resource } from "@builder.io/qwik";
-import { useEndpoint, type DocumentHead } from "@builder.io/qwik-city";
+import { type DocumentHead } from "@builder.io/qwik-city";
 import { MediaCarousel } from "@modules/MediaCarousel/MediaCarousel";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
 import { TvHero } from "@modules/TvHero/TvHero";
+import {
+  getMovie,
+  getRandomMedia,
+  getTrendingMovie,
+  getTrendingTv,
+  getTvShow,
+} from "@services/tmdb";
 import type { ProductionMedia } from "@services/types";
 import { getListItem } from "@utils/format";
 import { paths } from "@utils/paths";
 
-export const onGet = async () => {
-  const {
-    getTrendingTv,
-    getTrendingMovie,
-    getRandomMedia,
-    getMovie,
-    getTvShow,
-  } = await import("~/services/tmdb");
-
+export default async function HomePage() {
   const [movies, tv] = await Promise.all([
     getTrendingMovie({ page: 1 }),
     getTrendingTv({ page: 1 }),
@@ -30,12 +29,6 @@ export const onGet = async () => {
 
   const featuredMovie =
     random.media_type === "movie" ? await getMovie({ id: random.id }) : null;
-
-  return { featuredMovie, featuredTv, movies, tv };
-};
-
-export default function HomePage() {
-  const resource = useEndpoint<inferPromise<typeof onGet>>();
 
   return (
     <Resource
