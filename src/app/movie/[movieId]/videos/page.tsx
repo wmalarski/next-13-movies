@@ -1,5 +1,3 @@
-import { DocumentHead } from "@builder.io/qwik-city";
-
 export default function MovieVideosPage() {
   return (
     <section className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-6 px-16 py-4">

@@ -1,4 +1,3 @@
-import { DocumentHead } from "@builder.io/qwik-city";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
 import { PersonHero } from "@modules/PersonHero/PersonHero";
 import { getPerson } from "@services/tmdb";

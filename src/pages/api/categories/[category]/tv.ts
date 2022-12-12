@@ -1,4 +1,3 @@
-import { RequestEvent } from "@builder.io/qwik-city";
 import { getTrendingTv, getTvShows } from "@services/tmdb";
 import { paths } from "@utils/paths";
 import { z } from "zod";

@@ -1,5 +1,3 @@
-import { Slot } from "@builder.io/qwik";
-import { useLocation } from "@builder.io/qwik-city";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
 import { getMovie } from "@services/tmdb";
 import { paths } from "@utils/paths";

@@ -1,4 +1,3 @@
-import { RequestEvent } from "@builder.io/qwik-city";
 import { search } from "@services/tmdb";
 
 export const onGet = async (event: RequestEvent) => {

@@ -1,11 +1,8 @@
-import { $, useContext, useStore } from "@builder.io/qwik";
-import { DocumentHead, useLocation } from "@builder.io/qwik-city";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
 import { getGenreList, getMediaByGenre } from "@services/tmdb";
-import type { inferPromise, ProductionMedia } from "@services/types";
+import type { ProductionMedia } from "@services/types";
 import { notFound } from "next/navigation";
 import { z } from "zod";
-import { ContainerContext } from "~/routes/context";
 
 export default async function TvGenrePage({
   searchParams,
@@ -38,16 +35,12 @@ export default async function TvGenrePage({
 
   const location = useLocation();
 
-  const container = useContext(ContainerContext);
-
-  const fetcher$ = $(
-    async (page: number): Promise<inferPromise<typeof onGet>> => {
-      const params = new URLSearchParams({ page: String(page) });
-      const url = `${location.href}/api?${params}`;
-      const response = await fetch(url);
-      return response.json();
-    }
-  );
+  const fetcher = async (page: number) => {
+    const params = new URLSearchParams({ page: String(page) });
+    const url = `${location.href}/api?${params}`;
+    const response = await fetch(url);
+    return response.json();
+  };
 
   const store = useStore({
     currentPage: 1,
@@ -62,8 +55,8 @@ export default async function TvGenrePage({
         currentPage={store.currentPage}
         pageCount={tvShows?.total_pages || 1}
         parentContainer={container.value}
-        onMore$={async () => {
-          const newResult = await fetcher$(store.currentPage + 1);
+        onMore={async () => {
+          const newResult = await fetcher(store.currentPage + 1);
           const newMedia = newResult.tvShows.results || [];
           store.currentPage = newResult.tvShows.page || store.currentPage;
           store.results = [...store.results, ...newMedia];
@@ -73,7 +66,7 @@ export default async function TvGenrePage({
   );
 }
 
-export const head: DocumentHead<inferPromise<typeof onGet>> = (event) => {
+export const head: DocumentHead = (event) => {
   const name = event.data?.genre?.name;
   return {
     title: `${name} Tv Shows - Qwik City Movies`,

@@ -1,4 +1,3 @@
-import { DocumentHead } from "@builder.io/qwik-city";
 import { getImage, getImageSet } from "@services/images";
 
 export default function MoviePhotosPage() {

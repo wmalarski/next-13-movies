@@ -1,4 +1,3 @@
-import { DocumentHead } from "@builder.io/qwik-city";
 import { MovieInfoCard } from "@modules/MovieInfoCard/MovieInfoCard";
 import { PersonCarousel } from "@modules/PersonCarousel/PersonCarousel";
 import { TvHero } from "@modules/TvHero/TvHero";

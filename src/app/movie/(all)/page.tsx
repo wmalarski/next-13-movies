@@ -1,4 +1,3 @@
-import { type DocumentHead } from "@builder.io/qwik-city";
 import { MediaCarousel } from "@modules/MediaCarousel/MediaCarousel";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
 import { getMovie, getMovies, getRandomMedia } from "@services/tmdb";
