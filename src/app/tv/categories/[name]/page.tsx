@@ -8,10 +8,14 @@ import { notFound } from "next/navigation";
 import { z } from "zod";
 import { ContainerContext } from "~/routes/context";
 
-export default async function CategoryPage() {
+export default async function CategoryPage({
+  params,
+}: {
+  params: { name: string };
+}) {
   const parseResult = z
     .object({ name: z.string().min(1) })
-    .safeParse({ ...event.params });
+    .safeParse({ name: params.name });
 
   if (!parseResult.success) {
     notFound();

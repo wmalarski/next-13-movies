@@ -1,4 +1,4 @@
-import { Slot, useContextProvider } from "@builder.io/qwik";
+import { Slot } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
 import { getMovie } from "@services/tmdb";
@@ -6,12 +6,15 @@ import { paths } from "@utils/paths";
 import clsx from "clsx";
 import { notFound } from "next/navigation";
 import { z } from "zod";
-import { MovieResourceContext } from "./context";
 
-export default async function MovieLayout() {
+export default async function MovieLayout({
+  params,
+}: {
+  params: { movieId: string };
+}) {
   const parseResult = z
-    .object({ movieId: z.number().min(0).step(1) })
-    .safeParse({ movieId: +event.params.movieId });
+    .object({ movieId: z.coerce.number().min(0).step(1) })
+    .safeParse({ movieId: params.movieId });
 
   if (!parseResult.success) {
     notFound();
@@ -23,8 +26,6 @@ export default async function MovieLayout() {
     notFound();
   }
   const location = useLocation();
-
-  useContextProvider(MovieResourceContext, resource);
 
   const overviewHref = paths.media("movie", +location.params.movieId);
   const videoHref = paths.movieVideo(+location.params.movieId);

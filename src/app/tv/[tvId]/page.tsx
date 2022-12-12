@@ -6,10 +6,10 @@ import { getTvShow } from "@services/tmdb";
 import { notFound } from "next/navigation";
 import { z } from "zod";
 
-export default async function TvPage() {
+export default async function TvPage({ params }: { params: { tvId: string } }) {
   const parseResult = z
     .object({ tvId: z.number().min(0).step(1) })
-    .safeParse({ tvId: +event.params.tvId });
+    .safeParse({ tvId: params.tvId });
 
   if (!parseResult.success) {
     notFound();

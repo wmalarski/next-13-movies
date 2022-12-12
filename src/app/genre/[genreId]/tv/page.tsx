@@ -7,14 +7,19 @@ import { notFound } from "next/navigation";
 import { z } from "zod";
 import { ContainerContext } from "~/routes/context";
 
-export default async function TvGenrePage() {
-  const rawPage = event.url.searchParams.get("page") || "1";
+export default async function TvGenrePage({
+  searchParams,
+  params,
+}: {
+  params: { genreId: string };
+  searchParams?: { page?: string };
+}) {
   const parseResult = z
     .object({
-      genreId: z.number().min(0).step(1),
-      page: z.number().min(1).step(1),
+      genreId: z.coerce.number().min(0).step(1),
+      page: z.coerce.number().min(1).step(1),
     })
-    .safeParse({ genreId: +event.params.genreId, page: +rawPage });
+    .safeParse({ genreId: params.genreId, page: searchParams?.page });
 
   if (!parseResult.success) {
     notFound();

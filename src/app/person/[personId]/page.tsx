@@ -5,10 +5,14 @@ import { getPerson } from "@services/tmdb";
 import { notFound } from "next/navigation";
 import { z } from "zod";
 
-export default async function PersonPage() {
+export default async function PersonPage({
+  params,
+}: {
+  params: { personId: string };
+}) {
   const parseResult = z
     .object({ personId: z.number().min(0).step(1) })
-    .safeParse({ personId: +event.params.personId });
+    .safeParse({ personId: params.personId });
 
   if (!parseResult.success) {
     notFound();

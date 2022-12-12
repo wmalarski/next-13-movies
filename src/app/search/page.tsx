@@ -5,8 +5,12 @@ import { search } from "@services/tmdb";
 import type { inferPromise, ProductionMedia } from "@services/types";
 import { ContainerContext } from "../context";
 
-export default async function SearchPage() {
-  const query = event.url.searchParams.get("query");
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams?: { query?: string };
+}) {
+  const query = searchParams?.query;
 
   if (!query) {
     return null;
