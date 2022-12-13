@@ -6,13 +6,14 @@ export default function MoviePhotosPage() {
       <div className="flex items-end gap-4">
         <h2 className="text-2xl">Backdrops</h2>
         <span className="text-sm opacity-80">
-          {data.images?.backdrops?.length || 0} Images
+          {images?.backdrops?.length || 0} Images
         </span>
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(500px,1fr))] gap-6">
-        {data.images?.backdrops?.map((backdrop) => (
+        {images?.backdrops?.map((backdrop) => (
           <img
-            alt={`${data.title} backdrop`}
+            key={backdrop.id}
+            alt={`${title} backdrop`}
             src={getImage(backdrop, "92")}
             srcSet={getImageSet(backdrop, "500")}
             style={{ "aspect-ratio": backdrop.aspect_ratio }}
@@ -23,14 +24,15 @@ export default function MoviePhotosPage() {
       <div className="flex items-end gap-4">
         <h2 className="text-2xl">Posters</h2>
         <span className="text-sm opacity-80">
-          {data.images?.posters?.length || 0} Images
+          {images?.posters?.length || 0} Images
         </span>
       </div>
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6">
-        {data.images?.posters?.map((poster) => (
+        {images?.posters?.map((poster) => (
           <img
-            alt={`${data.title} poster`}
+            key={poster.id}
+            alt={`${title} poster`}
             src={getImage(poster, "92")}
             srcSet={getImageSet(poster, "342")}
             className="h-full max-h-full w-full object-cover"

@@ -2,12 +2,16 @@ import { MovieHero } from "@modules/MovieHero/MovieHero";
 import { getMovie } from "@services/tmdb";
 import { paths } from "@utils/paths";
 import clsx from "clsx";
-import { notFound } from "next/navigation";
+import Link from "next/link";
+import { notFound, usePathname } from "next/navigation";
+import { ReactNode } from "react";
 import { z } from "zod";
 
 export default async function MovieLayout({
+  children,
   params,
 }: {
+  children: ReactNode;
   params: { movieId: string };
 }) {
   const parseResult = z
@@ -18,59 +22,50 @@ export default async function MovieLayout({
     notFound();
   }
 
-  try {
-    const movie = await getMovie({ id: parseResult.data.movieId });
-  } catch {
-    notFound();
-  }
-  const location = useLocation();
+  const pathname = usePathname();
+  const movieId = parseResult.data.movieId;
+  const movie = await getMovie({ id: parseResult.data.movieId });
 
-  const overviewHref = paths.media("movie", +location.params.movieId);
-  const videoHref = paths.movieVideo(+location.params.movieId);
-  const photosHref = paths.moviePhotos(+location.params.movieId);
+  const overviewHref = paths.media("movie", movieId);
+  const videoHref = paths.movieVideo(movieId);
+  const photosHref = paths.moviePhotos(movieId);
 
   return (
     <div className="flex flex-col gap-4">
       <MovieHero media={movie} />
       <div className="flex flex-row items-center justify-center gap-4">
-        <a
+        <Link
           href={overviewHref}
           className={clsx(
             "transition-text p-2 text-xl uppercase opacity-70 duration-100 ease-in-out hover:opacity-100",
             {
               "border-b-2 border-b-white opacity-100":
-                overviewHref === location.pathname,
+                overviewHref === pathname,
             }
           )}
         >
           Overview
-        </a>
-        <a
+        </Link>
+        <Link
           href={videoHref}
           className={clsx(
             "transition-text p-2 text-xl uppercase opacity-70 duration-100 ease-in-out hover:opacity-100",
-            {
-              "border-b-2 border-b-white opacity-100":
-                videoHref === location.pathname,
-            }
+            { "border-b-2 border-b-white opacity-100": videoHref === pathname }
           )}
         >
           Videos
-        </a>
-        <a
+        </Link>
+        <Link
           href={photosHref}
           className={clsx(
             "transition-text p-2 text-xl uppercase opacity-70 duration-100 ease-in-out hover:opacity-100",
-            {
-              "border-b-2 border-b-white opacity-100":
-                photosHref === location.pathname,
-            }
+            { "border-b-2 border-b-white opacity-100": photosHref === pathname }
           )}
         >
           Photos
-        </a>
+        </Link>
       </div>
-      <Slot />
+      {children}
     </div>
   );
 }

@@ -20,14 +20,11 @@ export default async function MovieCategory({
 
   const name = parseResult.data.name;
 
-  try {
-    const movies =
-      name === "trending"
-        ? await getTrendingMovie({ page: 1 })
-        : await getMovies({ page: 1, query: name });
-  } catch {
-    notFound();
-  }
+  const movies =
+    name === "trending"
+      ? await getTrendingMovie({ page: 1 })
+      : await getMovies({ page: 1, query: name });
+
   const location = useLocation();
 
   const fetcher = async (page: number) => {
@@ -49,9 +46,9 @@ export default async function MovieCategory({
       </h1>
       <div>
         <MediaGrid
-          collection={[...(data.results || []), ...store.results]}
+          collection={[...(movies.results || []), ...store.results]}
           currentPage={store.currentPage}
-          pageCount={data.total_pages || 1}
+          pageCount={movies.total_pages || 1}
           parentContainer={container.value}
           onMore={async () => {
             const newResult = await fetcher(store.currentPage + 1);

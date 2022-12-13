@@ -20,26 +20,26 @@ export default async function AllTvPage() {
 
   return (
     <div className="flex flex-col gap-4">
-      <a href={paths.media("tv", data.featured?.id)}>
-        <TvHero media={data.featured} />
+      <a href={paths.media("tv", featured?.id)}>
+        <TvHero media={featured} />
       </a>
       <MediaCarousel
-        collection={data.popular?.results || []}
+        collection={popular?.results || []}
         title={getListItem({ query: "popular", type: "tv" })}
         viewAllHref={paths.tvCategory("popular")}
       />
       <MediaCarousel
-        collection={data.topRated?.results || []}
+        collection={topRated?.results || []}
         title={getListItem({ query: "top_rated", type: "tv" })}
         viewAllHref={paths.tvCategory("top_rated")}
       />
       <MediaCarousel
-        collection={data.onTheAir?.results || []}
+        collection={onTheAir?.results || []}
         title={getListItem({ query: "on_the_air", type: "tv" })}
         viewAllHref={paths.tvCategory("on_the_air")}
       />
       <MediaCarousel
-        collection={data.airingToday?.results || []}
+        collection={airingToday?.results || []}
         title={getListItem({ query: "airing_today", type: "tv" })}
         viewAllHref={paths.tvCategory("airing_today")}
       />

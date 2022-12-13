@@ -5,7 +5,7 @@ export default function MoviePage() {
   return (
     <div className="flex flex-col">
       <MovieInfoCard media={data} />
-      <PersonCarousel collection={data.credits?.cast || []} title="Cast" />
+      <PersonCarousel collection={credits?.cast || []} title="Cast" />
     </div>
   );
 }

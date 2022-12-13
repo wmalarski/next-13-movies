@@ -14,17 +14,13 @@ export default async function TvPage({ params }: { params: { tvId: string } }) {
     notFound();
   }
 
-  try {
-    const movie = await getTvShow({ id: parseResult.data.tvId });
-  } catch {
-    notFound();
-  }
+  const movie = await getTvShow({ id: parseResult.data.tvId });
 
   return (
     <div className="flex flex-col">
-      <TvHero media={data} />
-      <MovieInfoCard media={data} />
-      <PersonCarousel collection={data?.credits?.cast || []} title="Cast" />
+      <TvHero media={movie} />
+      <MovieInfoCard media={movie} />
+      <PersonCarousel collection={movie?.credits?.cast || []} title="Cast" />
     </div>
   );
 }

@@ -20,14 +20,11 @@ export default async function CategoryPage({
 
   const name = parseResult.data.name;
 
-  try {
-    const movies =
-      name === "trending"
-        ? await getTrendingTv({ page: 1 })
-        : await getTvShows({ page: 1, query: name });
-  } catch {
-    notFound();
-  }
+  const movies =
+    name === "trending"
+      ? await getTrendingTv({ page: 1 })
+      : await getTvShows({ page: 1, query: name });
+
   const location = useLocation();
 
   const fetcher = async (page: number) => {
@@ -49,9 +46,9 @@ export default async function CategoryPage({
       </h1>
       <div>
         <MediaGrid
-          collection={[...(results || []), ...store.results]}
+          collection={[...(movies.results || []), ...store.results]}
           currentPage={store.currentPage}
-          pageCount={total_pages || 1}
+          pageCount={movies.total_pages || 1}
           parentContainer={container.value}
           onMore={async () => {
             const newResult = await fetcher(store.currentPage + 1);

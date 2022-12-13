@@ -56,11 +56,11 @@ export default async function SearchPage({
       </form>
 
       <>
-        {data ? (
+        {result ? (
           <MediaGrid
-            collection={[...(data.result.results || []), ...store.results]}
+            collection={[...(result.results || []), ...store.results]}
             currentPage={store.currentPage}
-            pageCount={data.result?.total_pages || 1}
+            pageCount={result?.total_pages || 1}
             parentContainer={container.value}
             onMore={async () => {
               const newResult = await fetcher(store.currentPage + 1);

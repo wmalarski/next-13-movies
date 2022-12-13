@@ -17,19 +17,15 @@ export default async function PersonPage({
     notFound();
   }
 
-  try {
-    const movie = await getPerson({ id: parseResult.data.personId });
-  } catch {
-    notFound();
-  }
+  const movie = await getPerson({ id: parseResult.data.personId });
 
   return (
     <div className="flex flex-col">
-      <PersonHero person={data} />
+      <PersonHero person={movie} />
       <MediaGrid
         collection={[
-          ...(data.combined_credits?.cast || []),
-          ...(data.combined_credits?.crew || []),
+          ...(movie.combined_credits?.cast || []),
+          ...(movie.combined_credits?.crew || []),
         ]}
         currentPage={1}
         pageCount={1}
