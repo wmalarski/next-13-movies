@@ -2,7 +2,7 @@ import { getMovies, getTrendingMovie } from "@services/tmdb";
 import { paths } from "@utils/paths";
 import { z } from "zod";
 
-export const onGet = async (event: RequestEvent) => {
+export const onGet = async (event) => {
   const rawPage = event.url.searchParams.get("page") || "1";
   const parseResult = z
     .object({ name: z.string().min(1), page: z.number().min(1).step(1) })

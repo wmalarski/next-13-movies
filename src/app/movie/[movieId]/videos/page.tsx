@@ -1,7 +1,24 @@
-export default function MovieVideosPage() {
+import { getMovie } from "@services/tmdb";
+import { notFound } from "next/navigation";
+import { z } from "zod";
+
+export default async function MovieVideosPage({
+  params,
+}: {
+  params: { movieId: string };
+}) {
+  const parseResult = z
+    .object({ movieId: z.coerce.number().min(0).step(1) })
+    .safeParse({ movieId: params.movieId });
+
+  if (!parseResult.success) {
+    notFound();
+  }
+
+  const movie = await getMovie({ id: parseResult.data.movieId });
   return (
     <section className="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-6 px-16 py-4">
-      {videos?.results?.map((video) => (
+      {movie.videos?.results?.map((video) => (
         <a
           key={video.id}
           className="aspect-video"
