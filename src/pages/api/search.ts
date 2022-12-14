@@ -1,8 +1,9 @@
 import { search } from "@services/tmdb";
+import { NextApiRequest, NextApiResponse } from "next";
 
-export const onGet = async (event: RequestEvent) => {
-  const query = event.url.searchParams.get("query");
-  const page = event.url.searchParams.get("page") || "1";
+export const onGet = async (req: NextApiRequest, res: NextApiResponse) => {
+  const query = (req.query.query as string) || "";
+  const page = req.query.page || "1";
 
   if (!query) {
     return null;

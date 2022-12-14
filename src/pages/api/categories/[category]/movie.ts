@@ -1,15 +1,16 @@
 import { getMovies, getTrendingMovie } from "@services/tmdb";
 import { paths } from "@utils/paths";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { z } from "zod";
 
-export const onGet = async (event) => {
-  const rawPage = event.url.searchParams.get("page") || "1";
+export const onGet = async (req: NextApiRequest, res: NextApiResponse) => {
+  const rawPage = req.query.page || "1";
   const parseResult = z
     .object({ name: z.string().min(1), page: z.number().min(1).step(1) })
-    .safeParse({ ...event.params, page: +rawPage });
+    .safeParse({ ...req.query, page: +rawPage });
 
   if (!parseResult.success) {
-    throw event.response.redirect(paths.notFound);
+    return res.redirect(301, paths.notFound);
   }
 
   const { page, name } = parseResult.data;
@@ -21,6 +22,6 @@ export const onGet = async (event) => {
         : await getMovies({ page, query: name });
     return movies;
   } catch {
-    throw event.response.redirect(paths.notFound);
+    return res.redirect(301, paths.notFound);
   }
 };
