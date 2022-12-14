@@ -25,7 +25,7 @@ export default async function CategoryPage({
       : await getTvShows({ page: 1, query: name });
 
   return (
-    <div className="flex flex-col">
+    <div className="max-h-screen overflow-y-scroll flex flex-col">
       <h1 className="px-8 pt-4 text-4xl">
         {getListItem({ query: name, type: "tv" })}
       </h1>

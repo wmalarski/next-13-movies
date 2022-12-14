@@ -1,3 +1,4 @@
+import { Footer } from "@modules/Footer/Footer";
 import { MediaCarousel } from "@modules/MediaCarousel/MediaCarousel";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
 import { getMovie, getMovies, getRandomMedia } from "@services/tmdb";
@@ -18,7 +19,7 @@ export default async function MoviesPage() {
   const featured = await getMovie({ id: random.id });
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="max-h-screen overflow-y-scroll flex flex-col gap-4">
       {featured ? (
         <a href={paths.media("movie", featured?.id)}>
           <MovieHero media={featured} />
@@ -39,6 +40,7 @@ export default async function MoviesPage() {
         title={getListItem({ query: "now_playing", type: "movie" })}
         viewAllHref={paths.movieCategory("now_playing")}
       />
+      <Footer />
     </div>
   );
 }

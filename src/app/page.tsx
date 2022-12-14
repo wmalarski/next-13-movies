@@ -1,3 +1,4 @@
+import { Footer } from "@modules/Footer/Footer";
 import { MediaCarousel } from "@modules/MediaCarousel/MediaCarousel";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
 import { TvHero } from "@modules/TvHero/TvHero";
@@ -29,7 +30,7 @@ export default async function HomePage() {
     random.media_type === "movie" ? await getMovie({ id: random.id }) : null;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="max-h-screen overflow-y-scroll flex flex-col gap-4">
       {featuredTv ? (
         <a href={paths.media("tv", featuredTv.id)}>
           <TvHero media={featuredTv} />
@@ -50,6 +51,7 @@ export default async function HomePage() {
         title={getListItem({ query: "trending", type: "tv" })}
         viewAllHref={paths.tvCategory("trending")}
       />
+      <Footer />
     </div>
   );
 }

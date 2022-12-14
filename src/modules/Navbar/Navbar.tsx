@@ -3,7 +3,7 @@ import { paths } from "@utils/paths";
 export const Navbar = () => {
   return (
     <nav className="bg-black px-6 py-8 text-black md:h-screen">
-      <ul className="flex justify-around gap-10 md:flex-col md:justify-start">
+      <ul className="flex justify-around gap-10 md:flex-col md:justify-start w-max">
         <li className="hover:opacity-80">
           <a href={paths.index}>
             <img

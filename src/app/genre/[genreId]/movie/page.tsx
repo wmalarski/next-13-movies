@@ -33,7 +33,7 @@ export default async function MovieGenrePage({
   const genre = genres.find((genre) => genre.id === parseResult.data.genreId);
 
   return (
-    <div className="flex flex-col">
+    <div className="max-h-screen overflow-y-scroll flex flex-col">
       <h1 className="px-8 pt-4 text-4xl">{`Movie Genre: ${genre?.name}`}</h1>
       <MovieGenreGrid collection={movies} />
     </div>

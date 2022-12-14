@@ -1,3 +1,4 @@
+import { Footer } from "@modules/Footer/Footer";
 import { MediaCarousel } from "@modules/MediaCarousel/MediaCarousel";
 import { TvHero } from "@modules/TvHero/TvHero";
 import { getRandomMedia, getTvShow, getTvShows } from "@services/tmdb";
@@ -19,7 +20,7 @@ export default async function AllTvPage() {
   const featured = await getTvShow({ id: random.id });
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="max-h-screen overflow-y-scroll flex flex-col gap-4">
       <a href={paths.media("tv", featured?.id)}>
         <TvHero media={featured} />
       </a>
@@ -43,6 +44,7 @@ export default async function AllTvPage() {
         title={getListItem({ query: "airing_today", type: "tv" })}
         viewAllHref={paths.tvCategory("airing_today")}
       />
+      <Footer />
     </div>
   );
 }

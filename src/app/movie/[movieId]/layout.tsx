@@ -1,15 +1,17 @@
+import { Footer } from "@modules/Footer/Footer";
 import { MovieHero } from "@modules/MovieHero/MovieHero";
 import { getMovie } from "@services/tmdb";
 import { paths } from "@utils/paths";
 import clsx from "clsx";
 import Link from "next/link";
-import { notFound, usePathname } from "next/navigation";
+import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 import { z } from "zod";
 
 export default async function MovieLayout({
   children,
   params,
+  ...props
 }: {
   children: ReactNode;
   params: { movieId: string };
@@ -22,8 +24,8 @@ export default async function MovieLayout({
     notFound();
   }
 
-  const pathname = usePathname();
   const movieId = parseResult.data.movieId;
+  const pathname = paths.media("movie", movieId);
   const movie = await getMovie({ id: parseResult.data.movieId });
 
   const overviewHref = paths.media("movie", movieId);
@@ -31,7 +33,7 @@ export default async function MovieLayout({
   const photosHref = paths.moviePhotos(movieId);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="max-h-screen overflow-y-scroll flex flex-col gap-4">
       <MovieHero media={movie} />
       <div className="flex flex-row items-center justify-center gap-4">
         <Link
@@ -66,6 +68,7 @@ export default async function MovieLayout({
         </Link>
       </div>
       {children}
+      <Footer />
     </div>
   );
 }

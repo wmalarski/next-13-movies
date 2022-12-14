@@ -1,3 +1,4 @@
+import { Footer } from "@modules/Footer/Footer";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
 import { PersonHero } from "@modules/PersonHero/PersonHero";
 import { getPerson } from "@services/tmdb";
@@ -20,7 +21,7 @@ export default async function PersonPage({
   const movie = await getPerson({ id: parseResult.data.personId });
 
   return (
-    <div className="flex flex-col">
+    <div className="max-h-screen overflow-y-scroll flex flex-col">
       <PersonHero person={movie} />
       <MediaGrid
         collection={[
@@ -30,6 +31,7 @@ export default async function PersonPage({
         currentPage={1}
         pageCount={1}
       />
+      <Footer />
     </div>
   );
 }

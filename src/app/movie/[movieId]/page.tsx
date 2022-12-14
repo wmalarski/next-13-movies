@@ -20,7 +20,7 @@ export default async function MoviePage({
   const movie = await getMovie({ id: parseResult.data.movieId });
 
   return (
-    <div className="flex flex-col">
+    <div className="max-h-screen overflow-y-scroll flex flex-col">
       <MovieInfoCard media={movie} />
       <PersonCarousel collection={movie.credits?.cast || []} title="Cast" />
     </div>

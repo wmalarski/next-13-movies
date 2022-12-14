@@ -33,7 +33,7 @@ export default async function TvGenrePage({
   const genre = genres.find((genre) => genre.id === parseResult.data.genreId);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="max-h-screen overflow-y-scroll flex flex-col gap-4">
       <h1 className="px-8 pt-4 text-4xl">{`Tv Show Genre: ${genre?.name}`}</h1>
       <TvGenreGrid collection={tvShows} />
     </div>

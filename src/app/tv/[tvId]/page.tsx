@@ -1,3 +1,4 @@
+import { Footer } from "@modules/Footer/Footer";
 import { MovieInfoCard } from "@modules/MovieInfoCard/MovieInfoCard";
 import { PersonCarousel } from "@modules/PersonCarousel/PersonCarousel";
 import { TvHero } from "@modules/TvHero/TvHero";
@@ -17,10 +18,11 @@ export default async function TvPage({ params }: { params: { tvId: string } }) {
   const movie = await getTvShow({ id: parseResult.data.tvId });
 
   return (
-    <div className="flex flex-col">
+    <div className="max-h-screen overflow-y-scroll flex flex-col">
       <TvHero media={movie} />
       <MovieInfoCard media={movie} />
       <PersonCarousel collection={movie?.credits?.cast || []} title="Cast" />
+      <Footer />
     </div>
   );
 }

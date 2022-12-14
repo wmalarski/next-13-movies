@@ -15,7 +15,7 @@ export default async function SearchPage({
   const result = await search({ page: 1, query });
 
   return (
-    <div className="flex flex-col">
+    <div className="max-h-screen overflow-y-scroll flex flex-col">
       <form className="flex flex-row justify-start gap-4 bg-base-300 p-4">
         <img
           src="/images/magnifier.svg"
