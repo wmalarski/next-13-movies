@@ -1,4 +1,5 @@
 import { getMovie } from "@services/tmdb";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { z } from "zod";
 
@@ -25,8 +26,8 @@ export default async function MovieVideosPage({
           href={`https://www.youtube.com/watch?v=${video.key}`}
           target="_none"
         >
-          <img
-            alt={video.name}
+          <Image
+            alt={video.name || ""}
             src={`https://movies-proxy.vercel.app/ipx/f_webp,s_400x600/youtube/vi/${video.key}/maxresdefault.jpg`}
             className="h-full max-h-full w-full object-cover"
             width={400}

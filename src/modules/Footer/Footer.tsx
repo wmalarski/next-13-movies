@@ -1,18 +1,19 @@
+import Image from "next/image";
 import { ReactElement } from "react";
 
 export const Footer = (): ReactElement => {
   return (
     <footer className="flex flex-col gap-4 px-8 py-20">
-      <div className="text-lg text-white">Qwik City Movies</div>
+      <div className="text-lg text-white">Next.js 13 Movies</div>
       <div className="flex flex-row items-center gap-2">
         <span className="text-sm opacity-80">Made with</span>
-        <a href="https://qwik.builder.io/" className="rounded-md bg-white p-1">
-          <img
-            src="/images/qwik.svg"
+        <a href="https://beta.nextjs.org/docs" className="rounded-md p-1">
+          <Image
+            src="/images/nextjs.svg"
             width={100}
             height={20}
-            alt="Qwik"
-            aria-label="Qwik"
+            alt="Next.js"
+            aria-label="Next.js"
           />
         </a>
       </div>
@@ -30,8 +31,8 @@ export const Footer = (): ReactElement => {
         but is not endorsed or certified by TMDB.
       </div>
       <div className="text-sm opacity-80">
-        <a href="https://github.com/wmalarski/qwik-city-movies">
-          <img
+        <a href="https://github.com/wmalarski/next-13-movies">
+          <Image
             src="/images/git-hub.svg"
             width={24}
             height={24}

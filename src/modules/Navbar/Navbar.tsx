@@ -1,4 +1,5 @@
 import { paths } from "@utils/paths";
+import Image from "next/image";
 
 export const Navbar = () => {
   return (
@@ -6,7 +7,7 @@ export const Navbar = () => {
       <ul className="flex justify-around gap-10 md:flex-col md:justify-start w-max">
         <li className="hover:opacity-80">
           <a href={paths.index}>
-            <img
+            <Image
               src="/images/home.svg"
               width={24}
               height={24}
@@ -17,7 +18,7 @@ export const Navbar = () => {
         </li>
         <li className="hover:opacity-80">
           <a href={paths.movies}>
-            <img
+            <Image
               src="/images/movie.svg"
               width={24}
               height={24}
@@ -28,7 +29,7 @@ export const Navbar = () => {
         </li>
         <li className="hover:opacity-80">
           <a href={paths.tv}>
-            <img
+            <Image
               src="/images/tv.svg"
               width={24}
               height={24}
@@ -39,7 +40,7 @@ export const Navbar = () => {
         </li>
         <li className="hover:opacity-80">
           <a href={paths.search}>
-            <img
+            <Image
               src="/images/magnifier.svg"
               width={24}
               height={24}

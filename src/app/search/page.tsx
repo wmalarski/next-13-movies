@@ -1,4 +1,5 @@
 import { search } from "@services/tmdb";
+import Image from "next/image";
 import { SearchGrid } from "./SearchGrid/SearchGrid";
 
 export default async function SearchPage({
@@ -17,7 +18,7 @@ export default async function SearchPage({
   return (
     <div className="max-h-screen overflow-y-scroll flex flex-col">
       <form className="flex flex-row justify-start gap-4 bg-base-300 p-4">
-        <img
+        <Image
           src="/images/magnifier.svg"
           width={24}
           height={24}

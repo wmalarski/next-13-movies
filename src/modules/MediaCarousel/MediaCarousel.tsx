@@ -15,7 +15,7 @@ export const MediaCarousel = (props: Props): ReactElement => {
         <h2 className="text-2xl text-white">{props.title}</h2>
         <div className="flex-auto" />
         <a
-          className="transition-text opacity-80 duration-100 ease-in-out hover:text-qwik-light-blue hover:opacity-100"
+          className="transition-text opacity-80 duration-100 ease-in-out hover:opacity-100"
           href={props.viewAllHref}
         >
           Explore All
@@ -30,7 +30,7 @@ export const MediaCarousel = (props: Props): ReactElement => {
               </div>
             ))}
             <a
-              className="transition-text flex w-44 items-center justify-center duration-100 ease-in-out hover:text-qwik-light-blue"
+              className="transition-text flex w-44 items-center justify-center duration-100 ease-in-out"
               href={props.viewAllHref}
             >
               Explore All

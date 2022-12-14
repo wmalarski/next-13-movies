@@ -28,14 +28,15 @@ export default async function MoviePhotosPage({
       </div>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(500px,1fr))] gap-6">
         {movie.images?.backdrops?.map((backdrop) => (
-          <img
-            key={backdrop.file_path}
-            alt={`${movie.title} backdrop`}
-            src={getImage(backdrop, "92")}
-            srcSet={getImageSet(backdrop, "500")}
-            style={{ aspectRatio: backdrop.aspect_ratio }}
-            className="h-full max-h-full w-full object-cover"
-          />
+          <picture key={backdrop.file_path}>
+            <img
+              alt={`${movie.title} backdrop`}
+              src={getImage(backdrop, "92")}
+              srcSet={getImageSet(backdrop, "500")}
+              style={{ aspectRatio: backdrop.aspect_ratio }}
+              className="h-full max-h-full w-full object-cover"
+            />
+          </picture>
         ))}
       </div>
       <div className="flex items-end gap-4">
@@ -47,14 +48,15 @@ export default async function MoviePhotosPage({
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6">
         {movie.images?.posters?.map((poster) => (
-          <img
-            key={poster.file_path}
-            alt={`${movie.title} poster`}
-            src={getImage(poster, "92")}
-            srcSet={getImageSet(poster, "342")}
-            className="h-full max-h-full w-full object-cover"
-            style={{ aspectRatio: poster.aspect_ratio }}
-          />
+          <picture key={poster.file_path}>
+            <img
+              alt={`${movie.title} poster`}
+              src={getImage(poster, "92")}
+              srcSet={getImageSet(poster, "342")}
+              className="h-full max-h-full w-full object-cover"
+              style={{ aspectRatio: poster.aspect_ratio }}
+            />
+          </picture>
         ))}
       </div>
     </section>

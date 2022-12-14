@@ -1,4 +1,5 @@
 import type { MediaType } from "@services/types";
+import Image from "next/image";
 import { ReactElement } from "react";
 
 type Props = {
@@ -17,7 +18,7 @@ export const ExternalLinks = (props: Props): ReactElement => {
             aria-label="Twitter account"
             rel="noreferrer"
           >
-            <img
+            <Image
               src="/images/twitter.svg"
               width={20}
               height={20}
@@ -35,7 +36,7 @@ export const ExternalLinks = (props: Props): ReactElement => {
             aria-label="Facebook account"
             rel="noreferrer"
           >
-            <img
+            <Image
               src="/images/facebook.svg"
               width={20}
               height={20}
@@ -53,7 +54,7 @@ export const ExternalLinks = (props: Props): ReactElement => {
             aria-label="Instagram account"
             rel="noreferrer"
           >
-            <img
+            <Image
               src="/images/instagram.svg"
               width={20}
               height={20}
@@ -73,7 +74,7 @@ export const ExternalLinks = (props: Props): ReactElement => {
             aria-label="IMDb account"
             rel="noreferrer"
           >
-            <img
+            <Image
               src="/images/imdb.svg"
               width={20}
               height={20}
@@ -91,7 +92,7 @@ export const ExternalLinks = (props: Props): ReactElement => {
             aria-label="Homepage"
             rel="noreferrer"
           >
-            <img
+            <Image
               src="/images/link.svg"
               width={20}
               height={20}
