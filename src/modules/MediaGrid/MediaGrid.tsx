@@ -1,3 +1,4 @@
+"use client";
 import type { ProductionMedia } from "@services/types";
 import { ReactElement, useRef } from "react";
 import { MediaCard } from "../MediaCard/MediaCard";

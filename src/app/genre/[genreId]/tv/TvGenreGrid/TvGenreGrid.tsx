@@ -1,3 +1,4 @@
+"use client";
 import { MediaGrid } from "@modules/MediaGrid/MediaGrid";
 import type { Collection, ProductionMedia } from "@services/types";
 import { useState } from "react";

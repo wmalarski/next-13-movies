@@ -8,7 +8,7 @@ import { z } from "zod";
 
 export default async function TvPage({ params }: { params: { tvId: string } }) {
   const parseResult = z
-    .object({ tvId: z.number().min(0).step(1) })
+    .object({ tvId: z.coerce.number().min(0).step(1) })
     .safeParse({ tvId: params.tvId });
 
   if (!parseResult.success) {

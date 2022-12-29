@@ -11,7 +11,7 @@ export default async function PersonPage({
   params: { personId: string };
 }) {
   const parseResult = z
-    .object({ personId: z.number().min(0).step(1) })
+    .object({ personId: z.coerce.number().min(0).step(1) })
     .safeParse({ personId: params.personId });
 
   if (!parseResult.success) {

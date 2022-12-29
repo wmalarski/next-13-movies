@@ -4,18 +4,13 @@ import { z } from "zod";
 import { TvGenreGrid } from "./TvGenreGrid/TvGenreGrid";
 
 export default async function TvGenrePage({
-  searchParams,
   params,
 }: {
   params: { genreId: string };
-  searchParams?: { page?: string };
 }) {
   const parseResult = z
-    .object({
-      genreId: z.coerce.number().min(0).step(1),
-      page: z.coerce.number().min(1).step(1),
-    })
-    .safeParse({ genreId: params.genreId, page: searchParams?.page });
+    .object({ genreId: z.coerce.number().min(0).step(1) })
+    .safeParse(params);
 
   if (!parseResult.success) {
     notFound();
@@ -25,7 +20,7 @@ export default async function TvGenrePage({
     getMediaByGenre({
       genre: parseResult.data.genreId,
       media: "tv",
-      page: parseResult.data.page,
+      page: 1,
     }),
     getGenreList({ media: "tv" }),
   ]);
